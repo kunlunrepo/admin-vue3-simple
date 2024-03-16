@@ -1,5 +1,5 @@
 <template>
-    <div>home</div>
+    <div>首页</div>
     <el-row class="mb-4">
         <el-button>Default</el-button>
         <el-button type="primary">Primary</el-button>
@@ -18,6 +18,9 @@
         <NetIcon url="//at.alicdn.com/t/font_1791095_hy6b9xbrdsk.css" type="kefu"/>
         <IconfontIcon type="yicaina"/>
     </el-row>
+    <el-row class="mb-4">
+        <IconList/>
+    </el-row>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +32,7 @@ import svg from '@/assets/icons/advice.svg'
 import SvgIcon from "@/components/SvgIcon.vue";
 import NetIcon from "@/components/NetIcon.vue";
 import IconfontIcon from "@/components/IconfontIcon.vue";
+import IconList from "@/components/IconList.vue";
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
