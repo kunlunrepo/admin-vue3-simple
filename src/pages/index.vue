@@ -7,9 +7,17 @@
         <el-button type="info">Info</el-button>
         <el-button type="warning">Warning</el-button>
         <el-button type="danger">Danger</el-button>
+        <Icon icon="mdi:home" class="text-sky text-3xl" @click="handleClick" style="cursor: pointer"/>
+        <component :is="Icon" :icon="iconRef"/>
+        <img :src="svg" class="text-red text-3xl w-5 h-5 bg-red">
+        <SvgIcon type="advice" class="text-sky w-5 h-5"></SvgIcon>
+        <SvgIcon type="record" class="text-red w-5 h-5"></SvgIcon>
+        <SvgIcon type="setting" class="text-yellow w-5 h-5"></SvgIcon>
+        <SvgIcon type="share" class="text-green w-5 h-5"></SvgIcon>
+        <!--    <i class="iconfont iconfont-kefu"></i>-->
+        <NetIcon url="//at.alicdn.com/t/font_1791095_hy6b9xbrdsk.css" type="kefu"/>
+        <IconfontIcon type="yicaina"/>
     </el-row>
-    <Icon icon="mdi:home" class="text-sky text-3xl" @click="handleClick" style="cursor: pointer"/>
-    <component :is="Icon" :icon="iconRef"/>
 </template>
 
 <script setup lang="ts">
@@ -17,10 +25,14 @@ import {registerSW} from 'virtual:pwa-register'
 // import {Icon, loadIcons} from '@iconify/vue';
 import {Icon, addAPIProvider} from '@iconify/vue';
 import json from '@iconify/json/json/mdi.json'
+import svg from '@/assets/icons/advice.svg'
+import SvgIcon from "@/components/SvgIcon.vue";
+import NetIcon from "@/components/NetIcon.vue";
+import IconfontIcon from "@/components/IconfontIcon.vue";
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
-const arr = ['123','0-circle','0-circle-fill']
+const arr = ['123', '0-circle', '0-circle-fill']
 const iconRef = ref('')
 
 const handleClick = () => {
@@ -41,7 +53,7 @@ onMounted(() => {
     // 定时修改图标
     setInterval(() => {
         // iconRef.value = json.prefix + ':' +arr[Math.floor(Math.random() * arr.length)]
-        iconRef.value = '@local:bi:' +arr[Math.floor(Math.random() * arr.length)]
+        iconRef.value = '@local:bi:' + arr[Math.floor(Math.random() * arr.length)]
     }, 1000)
     registerSW({
         immediate: true,
