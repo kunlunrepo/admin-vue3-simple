@@ -1,8 +1,9 @@
 <template>
-    <ul class="flex flex-wrap border rounded">
+    <ul class="grid grid-cols-[repeat(auto-fill,minmax(1.825rem,1fr))] border-l border-t rounded">
         <li :class="['border-r border-b flex flex-col justify-center items-center cursor-pointer', itemClass] "
-            v-for="(i, index) in iconData" :key="index" @click="handleClick(i)">
-            <component :is="Icon" :icon="`${collection}:${i}`" :class="iconClass"/>
+            v-for="(i, index) in iconData" :key="index" @click="handleClick(`${collection}:${i}`, index)">
+            <component :is="Icon" :icon="`${collection}:${i}`"
+                       :class="[iconClass, { [activeClass]: modelValue ? modelValue === `${collection}:${i}` : choose === index}]"/>
             <div v-if="showText" class="text-sm">{{ convertString(i) }}</div>
         </li>
     </ul>
@@ -11,15 +12,12 @@
 <script setup lang="ts">
 import {Icon, loadIcons, loadIcon} from '@iconify/vue'
 import data from './icon-ep.json'
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+import type {IconListType} from "@/components/Icon/types";
 
-interface IconListType {
-    iconData: string[] // 数组比较特殊
-    collection: string
-    itemClass: string
-    iconClass: string
-    showText: boolean
-}
+// VUE3.3后的新API
+const modelValue = defineModel(
+)
 
 const props = withDefaults(defineProps<IconListType>(), {
     iconData: () => data,
@@ -31,15 +29,20 @@ const props = withDefaults(defineProps<IconListType>(), {
 
 // 渲染前提前加载图标,避免出现图标闪烁的问题
 onBeforeMount(async () => {
-    props.iconData && props.iconData.length && (await loadIcons(props.iconData.map(o=>`${props.collection}:${o}`)))
+    props.iconData && props.iconData.length && (await loadIcons(props.iconData.map(o => `${props.collection}:${o}`)))
 })
 
 // 回调事件
 const emits = defineEmits(['click'])
 
+// 选中图标下标
+const choose = ref<number>()
+
 // 图标事件
-async function handleClick(i : string) {
-    emits('click',i)
+async function handleClick(i: string, num: number) {
+    choose.value = num
+    modelValue.value = i
+    emits('click', i)
 }
 
 // 下划线转驼峰

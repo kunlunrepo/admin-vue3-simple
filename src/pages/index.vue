@@ -29,10 +29,10 @@ import {registerSW} from 'virtual:pwa-register'
 import {Icon, addAPIProvider} from '@iconify/vue';
 import json from '@iconify/json/json/mdi.json'
 import svg from '@/assets/icons/advice.svg'
-import SvgIcon from "@/components/SvgIcon.vue";
-import NetIcon from "@/components/NetIcon.vue";
-import IconfontIcon from "@/components/IconfontIcon.vue";
-import IconList from "@/components/IconList.vue";
+import SvgIcon from "@/components/Icon/SvgIcon.vue";
+import NetIcon from "@/components/Icon/NetIcon.vue";
+import IconfontIcon from "@/components/Icon/IconfontIcon.vue";
+import IconList from "@/components/Icon/IconList.vue";
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
