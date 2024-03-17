@@ -24,6 +24,9 @@
         <DarkModeToggle />
         <div class="w-25 h-25 bg-red dark:bg-sky">块元素</div>
     </el-row>
+    <el-row>
+        <FullScreen style="font-size: 2rem; color: blue"/>
+    </el-row>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +40,7 @@ import NetIcon from "@/components/Icon/NetIcon.vue";
 import IconfontIcon from "@/components/Icon/IconfontIcon.vue";
 import IconList from "@/components/Icon/IconList.vue";
 import DarkModeToggle from "@/components/Themes/DarkModeToggle.vue";
+import FullScreen from "@/components/Themes/FullScreen.vue";
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
