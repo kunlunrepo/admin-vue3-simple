@@ -23,5 +23,6 @@ declare module 'vue-router/auto-routes' {
     '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
     '/components/icon/ep-icon-list': RouteRecordInfo<'/components/icon/ep-icon-list', '/components/icon/ep-icon-list', Record<never, never>, Record<never, never>>,
     '/components/icon/ep-icon-picker': RouteRecordInfo<'/components/icon/ep-icon-picker', '/components/icon/ep-icon-picker', Record<never, never>, Record<never, never>>,
+    '/icon-test': RouteRecordInfo<'/icon-test', '/icon-test', Record<never, never>, Record<never, never>>,
   }
 }

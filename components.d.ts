@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DarkModeToggle: typeof import('./src/components/Themes/DarkModeToggle.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
@@ -15,7 +16,9 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    Icon: typeof import('./src/components/Icon/Icon.vue')['default']
     IconfontIcon: typeof import('./src/components/Icon/IconfontIcon.vue')['default']
+    Iconify: typeof import('./src/components/Icon/Iconify.vue')['default']
     IconList: typeof import('./src/components/Icon/IconList.vue')['default']
     IconPicker: typeof import('./src/components/Icon/IconPicker.vue')['default']
     NetIcon: typeof import('./src/components/Icon/NetIcon.vue')['default']

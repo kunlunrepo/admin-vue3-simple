@@ -1,7 +1,7 @@
 <template>
     <div>首页</div>
     <el-row class="mb-4">
-        <el-button>Default</el-button>
+<!--        <el-button>Default</el-button>
         <el-button type="primary">Primary</el-button>
         <el-button type="success">Success</el-button>
         <el-button type="info">Info</el-button>
@@ -14,12 +14,15 @@
         <SvgIcon type="record" class="text-red w-5 h-5"></SvgIcon>
         <SvgIcon type="setting" class="text-yellow w-5 h-5"></SvgIcon>
         <SvgIcon type="share" class="text-green w-5 h-5"></SvgIcon>
-        <!--    <i class="iconfont iconfont-kefu"></i>-->
+        &lt;!&ndash;    <i class="iconfont iconfont-kefu"></i>&ndash;&gt;
         <NetIcon url="//at.alicdn.com/t/font_1791095_hy6b9xbrdsk.css" type="kefu"/>
-        <IconfontIcon type="yicaina"/>
+        <IconfontIcon type="yicaina"/>-->
     </el-row>
     <el-row class="mb-4">
-        <IconList/>
+        现在模式：{{isDark}}
+<!--        <el-button type="primary" @click="handleDarkClick">暗黑模式</el-button>-->
+        <DarkModeToggle />
+        <div class="w-25 h-25 bg-red dark:bg-sky">块元素</div>
     </el-row>
 </template>
 
@@ -33,6 +36,7 @@ import SvgIcon from "@/components/Icon/SvgIcon.vue";
 import NetIcon from "@/components/Icon/NetIcon.vue";
 import IconfontIcon from "@/components/Icon/IconfontIcon.vue";
 import IconList from "@/components/Icon/IconList.vue";
+import DarkModeToggle from "@/components/Themes/DarkModeToggle.vue";
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
@@ -70,6 +74,13 @@ onMounted(() => {
         }
     })
 })
+
+// 暗黑模式按钮事件
+// const isDark = useDark()
+// const toggle = useToggle(isDark)
+// const handleDarkClick = () => {
+//     toggle()
+// }
 </script>
 
 <style scoped></style>

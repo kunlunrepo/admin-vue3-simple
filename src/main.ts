@@ -11,7 +11,10 @@ import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css'
 import 'virtual:svg-icons-register'
 
+// element-plus 样式
 import 'element-plus/dist/index.css'
+// 暗黑模式样式
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App)
 
