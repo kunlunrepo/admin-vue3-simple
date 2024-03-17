@@ -1,5 +1,6 @@
-import {BadgeProps} from "element-plus";
-import {IconifyIcon} from "@iconify/vue";
+import type { IconifyIcon, IconProps } from "@iconify/vue";
+import type { BadgeProps, AvatarProps, TagProps } from "element-plus";
+import type { CSSProperties } from "vue";
 
 export interface NotificationProps extends Partial<BadgeProps> {
     icon: string | IconifyIcon
@@ -15,7 +16,8 @@ export interface MessageListItem {
     title: string
     content?: string
     time?: string
-    tagProps?: Partial<TagProps>
+    // tagProps?: Partial<TagProps>
+    tagProps?: { type: string } | undefined;
     tag?: string
 }
 

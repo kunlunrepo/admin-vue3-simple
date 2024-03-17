@@ -1,86 +1,87 @@
 <template>
-    <div>
-        <el-tabs>
-            <el-tab-pane label="User" name="first">User</el-tab-pane>
-            <ul>
-                <li>
+    <el-tabs v-model="activeName" :class="wrapClass" :style="wrapStyle" @tab-click="handleTabClick">
+        <el-tab-pane :label="tab.title" :name="tab.title" v-for="(tab, index) in lists" :key="index" >
+            <ul v-if="tab.contents && tab.contents.length">
+                <li v-for="(item, iIndex) in tab.contents" :key="iIndex" class="cursor-pointer hover:bg-sky-100 py-2">
                     <el-row justify="center" align="middle">
-                        <el-col :span="4" align="middle">
+                        <el-col :span="4" align="middle" @click="handleClickAvatar(item.avatar)" v-if="item.avatar">
                             <!--头像-->
-                            <el-avatar :size="'small'" :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" />
+                            <el-avatar  v-bind="Object.assign({size: 'small'}, item.avatar)" />
                         </el-col>
-                        <el-col :span="20" class="px-3">
+                        <el-col :span="20" class="px-3" @click="() => handleClickItem(item)">
                             <!--消息-->
                             <el-row align="middle" class="flex-nowrap! mb-2">
                                 <!--消息标题-->
                                 <div class="text-base line-clamp-1">
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试
+                                    {{item.title}}
                                 </div>
-                                <el-tag class="ml-2"  type="success" size="small" effect="dark">Tag 1</el-tag>
+                                <el-tag v-if="item.tag" class="ml-2" effect="dark"  v-bind="item.tagProps">
+                                    {{item.tag}}
+                                </el-tag>
                             </el-row>
-                            <el-row>
+                            <el-row v-if="item.content">
                                 <!--消息内容-->
                                 <div class="text-sm text-gray-400 mb-2 line-clamp-2">
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试,
-                                    消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试，消息内容测试
+                                    {{item.contents}}
                                 </div>
                             </el-row>
-                            <el-row>
+                            <el-row v-if="item.time">
                                 <!--消息时间-->
-                                <div class="text-sm text-gray-400">2024-03-17 12:00:00</div>
+                                <div class="text-sm text-gray-400">{{item.time}}</div>
                             </el-row>
                         </el-col>
                     </el-row>
                 </li>
             </ul>
-        </el-tabs>
-        <div class="flex! w-full justify-around border-t">
-            <div class="flex flex-1 py-3 border-r items-center justify-center hover:bg-sky-100 cursor-pointer text-gray-500">
-                <Delete/>
-                <span class="ml-2">清空</span>
-            </div>
-            <div class="flex flex-1 py-3 items-center justify-center hover:bg-sky-100 cursor-pointer text-gray-500">
-                <More/>
-                <span class="ml-2">更多</span>
-            </div>
+        </el-tab-pane>
+    </el-tabs>
+    <div class="flex! w-full justify-around border-t">
+        <div class="flex flex-1 py-3 border-r items-center justify-center hover:bg-sky-100 cursor-pointer text-gray-500"
+             v-for="(action, index) in actions" :key="index" @click="action.click">
+            <Iconify v-if="action.icon" :icon="action.icon" :color="action.color" :style="action.style" />
+            <span class="ml-2">{{action.title}}</span>
         </div>
     </div>
 </template>
 
 <script setup lang="tsx">
+import type {MessageListItem, NoticeMessageListProps} from "@/components/Notice/types";
+import type {AvatarProps, TabsPaneContext} from "element-plus";
 
-import type {MessageListItem} from "@/components/Notice/types";
+const props = defineProps<NoticeMessageListProps>()
 
-// interface NoticeActionsItem extends IconProps {
-//     title: string
-//     click: () => void
-// }
-//
-// interface NoticeMessageListOptions {
-//     title: string
-//     contents?: MessageListItem[]
-// }
-//
-// interface NoticeMessageListProps {
-//     lists: NoticeMessageListOptions[]
-//     actions: NoticeActionsItem[]
-//     wrapClass?: string
-//     wrapStyle?: CSSProperties
-// }
+const activeName = ref(props?.lists[0].title)
 
-// 清空
-const Delete = () => <i className="i-ep:delete"></i>
-// 更多
-const More = () => <i className="i-ep:more"></i>
+// 事件传递
+const emits = defineEmits< {
+    clickAvatar: [avatar: AvatarProps],
+    clickItem: [item: MessageListItem],
+    clickTab: [tab: TabsPaneContext, event: Event],
+}>()
+
+const handleClickAvatar = (avatar: AvatarProps) => {
+    emits('clickAvatar', avatar)
+}
+const handleClickItem = (item: MessageListItem) => {
+    emits('clickItem', item)
+}
+
+const handleTabClick = (tab: TabsPaneContext, event: Event) => {
+    emits('clickTab', tab, event)
+}
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+:deep(.el-tabs__nav-scroll) {
+    padding-left: 1rem;
+}
 
+:deep(.el-tabs__header) {
+    margin: 0;
+}
+
+:deep(.el-tabs__content) {
+    margin: 0.8rem 0;
+}
 </style>
