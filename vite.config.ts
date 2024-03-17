@@ -23,6 +23,8 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import {createSvgIconsPlugin} from 'vite-plugin-svg-icons'
 import path from 'path'
 
+import I18n from '@intlify/unplugin-vue-i18n/vite'
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
@@ -105,6 +107,12 @@ export default defineConfig({
             // 指定symbolId格式
             symbolId: 'icon-[dir]-[name]',
         }),
+        I18n({
+            include: [path.resolve(process.cwd(), './locales/**')],
+            // 说明：由于配置了modules/i18n.ts中默认为legacy:false
+            // 所以禁止修改
+            compositionOnly: true
+        })
     ],
     resolve: {
         alias: {

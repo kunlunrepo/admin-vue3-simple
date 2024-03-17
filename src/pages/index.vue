@@ -27,6 +27,14 @@
     <el-row>
         <FullScreen style="font-size: 2rem; color: blue"/>
     </el-row>
+    <el-row>
+        <div>{{$t('hello')}}</div>
+        <div>{{$t('el.colorpicker.confirm')}}</div>
+        <select v-model="locale">
+            <option value="en">en</option>
+            <option value="zh-CN">中文</option>
+        </select>
+    </el-row>
 </template>
 
 <script setup lang="ts">
@@ -41,6 +49,9 @@ import IconfontIcon from "@/components/Icon/IconfontIcon.vue";
 import IconList from "@/components/Icon/IconList.vue";
 import DarkModeToggle from "@/components/Themes/DarkModeToggle.vue";
 import FullScreen from "@/components/Themes/FullScreen.vue";
+import {loadLocaleMessages} from "@/modules/i18n";
+
+// import {useI18n} from 'vue-i18n'
 
 // const arr = Object.keys(json.icons)
 // const iconRef = ref(arr[0])
@@ -85,6 +96,13 @@ onMounted(() => {
 // const handleDarkClick = () => {
 //     toggle()
 // }
+
+// 国际化
+// const { t, locale } = useI18n()
+const locale = ref('zh-CN')
+watch(locale, () => {
+    loadLocaleMessages(locale.value)
+})
 </script>
 
 <style scoped></style>
