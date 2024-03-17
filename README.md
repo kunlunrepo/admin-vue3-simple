@@ -27,6 +27,10 @@ pnpm install --save-dev @iconify/vue
 #svg-icon
 pnpm install vite-plugin-svg-icons -D
 
+#i18n
+pnpm install vue-i18n@9
 
+#i18n优化
+pnpm install --save-dev @intlify/unplugin-vue-i18n
 
 ```

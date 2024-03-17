@@ -25,8 +25,35 @@ import path from 'path'
 
 import I18n from '@intlify/unplugin-vue-i18n/vite'
 
+import fs from 'fs'
+
+/**
+ * 过滤element-plus的.mjs的文件，不打包不需要的locales
+ * 判断, /locales中对应的文件名.mjs文件作为过滤条件 -> 保留
+ */
+function externalElementPlusLocales(id:string) {
+    const localesDir = path.resolve(__dirname, 'locales')
+    const localesFiles = fs.readdirSync(localesDir).map((file) => file.match(
+        /([\w-]*)\.mjs$/)?.[1] || ''
+    )
+    if (id.includes('element-plus/dist/locale')) {
+        // 获取id的basename
+        // 判断这个basename在不在上面的localesFiles中
+        const basename = path.basename(id, '.mjs')
+        return !localesFiles.some(o => o.toLowerCase() === basename)
+    }
+    // 其他外部依赖
+    return false;
+}
+
+
 // https://vitejs.dev/config/
 export default defineConfig({
+    build: {
+        rollupOptions: {
+            external: (id) => externalElementPlusLocales(id)
+        }
+    },
     plugins: [
         VueRouter(),
         vue(),

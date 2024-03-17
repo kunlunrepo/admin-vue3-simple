@@ -12,11 +12,12 @@ const localesMap = Object.fromEntries(
     // 格式： import.meta.globa 解析成 filename: ./locale/en.js 或 ()=>import('./locales/en.js')
     // -> [./locale/en.js:  ()=>import('./locales/en.js')] => ['en', ()=>import('./locales/en.js')]
     // 最终 { en: function(){}, zh-CN: function(){} }
-    Object.entries(import.meta.glob('../../locales/*.js'))
-        .map(([path, loadLocale]) => [path.match(/([\w-]*)\.js$/)?.[1], loadLocale]),
+    Object.entries(import.meta.glob('../../locales/*.json'))
+        .map(([path, loadLocale]) => [path.match(/([\w-]*)\.json$/)?.[1], loadLocale]),
 ) as Record<Locale, () => Promise<{ default: Record<string, string> }>>
 
 // ElementPlus语言包
+// 过滤不相关的.mjs的locales文件
 const elementPlusLocalesMap = Object.fromEntries(
     // 格式： import.meta.globa 解析成 filename: ./locale/en.js 或 ()=>import('./locales/en.js')
     // -> [./locale/en.js:  ()=>import('./locales/en.js')] => ['en', ()=>import('./locales/en.js')]

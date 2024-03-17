@@ -1,8 +1,0 @@
-export default {
-    hello: '你好 imooc',
-    el: {
-        colorpicker: {
-            confirm: '确定 1',
-        }
-    }
-}
