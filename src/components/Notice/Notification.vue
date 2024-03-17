@@ -15,17 +15,8 @@
 
 <script setup lang="ts">
 import Icon from "../Icon/Iconify.vue";
-import {BadgeProps} from "element-plus";
-import type {IconifyIcon} from "@iconify/vue";
+import type {NotificationProps} from './types'
 
-interface NotificationProps extends Partial<BadgeProps> {
-    icon: string | IconifyIcon
-    iconSize?: number
-    iconColor?: string
-    size: number
-    scale: number
-    color: string
-}
 
 const props = withDefaults(defineProps<NotificationProps>(), {
     icon: 'ep:bell',

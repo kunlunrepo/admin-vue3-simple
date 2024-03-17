@@ -13,13 +13,13 @@
 import {Icon, loadIcons, loadIcon} from '@iconify/vue'
 import data from './icon-ep.json'
 import {ElMessage} from 'element-plus'
-import type {IconListType} from "@/components/Icon/types";
+import type {IconListProps} from "@/components/Icon/types";
 
 // VUE3.3后的新API
 const modelValue = defineModel(
 )
 
-const props = withDefaults(defineProps<IconListType>(), {
+const props = withDefaults(defineProps<IconListProps>(), {
     iconData: () => data,
     collection: 'ep',
     iconClass: 'text-3xl mb-3',

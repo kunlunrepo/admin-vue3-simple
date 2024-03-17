@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import {Icon} from "@iconify/vue";
-import type {IconPickerSubmitDataType} from "@/components/Icon/types";
+import type {IconPickerSubmitDataProps} from "@/components/Icon/types";
 
 defineProps({
     width: {
@@ -57,7 +57,7 @@ const iconRef = ref("")
 const [show, toggle] = useToggle(false)
 // 向外暴露事件
 const emits = defineEmits<{
-    submit: [IconPickerSubmitDataType],
+    submit: [IconPickerSubmitDataProps],
     cancel: []
 }>()
 

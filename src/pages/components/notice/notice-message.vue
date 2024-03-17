@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Notice/>
       通知组件示例
       <Notification value="123456" :scale="scale">
       </Notification>
@@ -16,6 +17,7 @@
 
 <script setup lang="ts">
 import Notification from "@/components/Notice/Notification.vue";
+import Notice from "@/components/Notice/Notice.vue";
 
 const scale = ref(0.5);
 </script>

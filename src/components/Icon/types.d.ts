@@ -6,13 +6,13 @@ export interface NetIconProps {
     type: string
 }
 // icon采集器提交数据类型
-export interface IconPickerSubmitDataType {
+export interface IconPickerSubmitDataProps {
     icon: string
     color: string
     fontSize: number
 }
 // icon列表类型
-export interface IconListType {
+export interface IconListProps {
     iconData: string[] // 数组比较特殊
     collection: string
     itemClass: string
