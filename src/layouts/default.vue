@@ -10,9 +10,9 @@
             </el-scrollbar>
         </div>
         <!--content-->
-        <div class="flex-1 h-full bg-blue">
-            2222
+        <div class="flex-1 h-full">
             <!--header: fullscreen, darkmode, theme, menu-->
+            <Header :locales="locales"></Header>
             <!--            <router-view></router-view>-->
         </div>
     </div>
@@ -22,13 +22,30 @@
 import {routes} from 'vue-router/auto-routes'
 import type {RouteRecordRaw} from "vue-router";
 import type {AppRouteMenuItem} from "@/components/Menu/types";
+import Header from "@/components/Layouts/Header.vue";
+import type {LocaleItem} from "@/components/Themes/types";
+
+
 
 interface ThemeSettings {
     menuWidth: string | number;
+    locales?: LocaleItem[]
 }
 
 const props = withDefaults(defineProps<ThemeSettings>(), {
-    menuWidth: 240
+    menuWidth: 240,
+    locales: () => [
+        {
+            text: 'English',
+            name: 'en',
+            icon: 'ri:english-input'
+        },
+        {
+            text: '中文',
+            name: 'zh-CN',
+            icon: 'uil:letter-chinese-a'
+        }
+    ]
 })
 
 function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {

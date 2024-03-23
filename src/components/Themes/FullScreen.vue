@@ -12,6 +12,10 @@ defineProps({
     tag: {
         type: String,
         default: 'i'
+    },
+    iconClass: {
+        type: String,
+        default: 'text-xl'
     }
 })
 

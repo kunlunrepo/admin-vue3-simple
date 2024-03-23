@@ -1,7 +1,7 @@
 <template>
     <el-switch
         style="--el-switch-on-color: #333"
-        v-model="isDark" :active-action-icon="Moon" :inactive-action-icon="Sun"/>
+        v-model="isDark" :active-action-icon="Moon" :inactive-action-icon="Sun" size="large"/>
 </template>
 
 <script setup lang="ts">
@@ -18,11 +18,11 @@ const isDark = useStorage('dark-mode-flag', props.dark)
 const preferredDark = usePreferredDark()
 // 月亮图标
 const Moon = () => h('i', {
-    class: 'i-prime:moon',
+    class: 'i-prime:moon text-3xl',
 })
 // 太阳图标
 const Sun = () => h('i', {
-    class: 'i-octicon:sun-24',
+    class: 'i-octicon:sun-24 text-3xl',
 })
 
 function toggleMode(flag: boolean) {
