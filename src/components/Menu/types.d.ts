@@ -2,7 +2,7 @@ import {IconifyIcon} from "@iconify/vue";
 import {MenuProps as ElMenuProps} from "element-plus/es/components/menu/src/menu";
 import {SubMenuProps} from "element-plus";
 type Component<T = any> = ReturnType<typeof defineComponent> | (() => Promise<T>) | (() => Promise<typeof import("*.vue")>)
-
+import type {CSSProperties} from "vue";
 export interface RouteMeta extends Record<string | number | symbol, unknown>{
     title?: string
     layout?: string
@@ -13,7 +13,7 @@ export interface RouteMeta extends Record<string | number | symbol, unknown>{
 }
 
 export interface AppRouteMenuItem {
-    name: string
+    name?: string | Symbol
     meta?: RouteMeta
     children?: AppRouteMenuItem[]
     alias?: string
@@ -24,5 +24,11 @@ export interface AppRouteMenuItem {
 export interface MenuProps extends Partial<ElMenuProps> {
     data: AppRouteMenuItem[],
     subMenuProps?: Partial<SubMenuProps>
-    collapse?: boolean
+    collapse?: boolean,
+    iconProps?: IconOptions
+}
+
+export interface IconOptions {
+    style: CSSProperties
+    class: string
 }

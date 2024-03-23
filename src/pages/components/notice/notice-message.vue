@@ -1,18 +1,18 @@
 <template>
-  <div>
-      <Notice :lists="lists" :actions="actions" wrap-class="w-[300px]" @click-item="handleClickItem"/>
-      通知组件示例
-      <Notification value="123456" :scale="scale" :size="28" :color="'blue'">
-      </Notification>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-      {{scale}}
-      <el-button @click="scale=0.5">点击</el-button>
-      <el-button @click="scale=1">点击</el-button>
-      <el-button @click="scale=1.5">点击</el-button>
-  </div>
+    <div>
+        <Notice :lists="lists" :actions="actions" wrap-class="w-[300px]" @click-item="handleClickItem"/>
+        通知组件示例
+        <Notification value="123456" :scale="scale" :size="28" :color="'blue'">
+        </Notification>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        {{scale}}
+        <el-button @click="scale=0.5">点击</el-button>
+        <el-button @click="scale=1">点击</el-button>
+        <el-button @click="scale=1.5">点击</el-button>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -104,6 +104,13 @@ const lists = ref<NoticeMessageListOptions[]>([
 const handleClickItem = (item: any) => {
     console.log("handleClickItem",item)
 }
+
+definePage({
+    meta: {
+        title: '消息通知',
+        icon: 'mdi:message'
+    }
+})
 
 </script>
 

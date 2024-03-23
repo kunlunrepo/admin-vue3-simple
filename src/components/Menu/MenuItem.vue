@@ -6,12 +6,12 @@
     <template v-else>
         <!--折叠-->
         <el-menu-item v-if="collapse" :index="getIndex(data)" :disabled="data.meta?.disabled">
-            <Iconify :icon="data.meta?.icon"></Iconify>
+            <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
             <template #title>{{ data.meta?.title }}</template>
         </el-menu-item>
         <!--侧栏-->
         <el-menu-item v-else :index="getIndex(data)" :disabled="data.meta?.disabled">
-            <Iconify :icon="data.meta?.icon"></Iconify>
+            <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
             <span>{{ data.meta?.title }}</span>
         </el-menu-item>
     </template>
@@ -19,12 +19,15 @@
 
 <script setup lang="ts">
 import {useMenu} from "@/components/Menu/useMenu";
-import type {AppRouteMenuItem} from "@/components/Menu/types";
+import type {AppRouteMenuItem, IconOptions} from "@/components/Menu/types";
+import Iconify from "@/components/Icon/Iconify.vue";
 
 interface MenuItemProps {
     data: AppRouteMenuItem
     collapse: boolean
 }
+
+const iconProps = inject('iconProps') as IconOptions
 
 const props = defineProps<MenuItemProps>()
 

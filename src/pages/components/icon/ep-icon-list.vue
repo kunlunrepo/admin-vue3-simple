@@ -5,7 +5,7 @@
         <el-switch v-model="copyTypeFlay" active-text="复制Icon名称" inactive-text="复制Icon图标" class="mb-2 mx-4"/>
         <el-switch v-model="showText" active-text="显示名称" inactive-text="隐藏文字" class="mb-2"/>
     </div>
-  <IconList :show-text="showText" @click="handleClick"/>
+    <IconList :show-text="showText" @click="handleClick"/>
 </template>
 
 <script setup lang="ts">
@@ -75,4 +75,10 @@ function objectToSvg(svgObject: any) {
     return svgString
 }
 
+definePage({
+    meta: {
+        title: '图标列表',
+        icon: 'mdi:bookmark-multiple'
+    }
+})
 </script>

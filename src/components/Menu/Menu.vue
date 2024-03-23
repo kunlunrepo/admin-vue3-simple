@@ -1,5 +1,5 @@
 <template>
-    <el-menu v-bind="menuProps">
+    <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}">
         <slot name="icon"></slot>
         <!--左右logo+菜单的情况-->
         <div class="flex-grow" v-if="isDefined(slots['icon'])"></div>
@@ -16,10 +16,23 @@ import SubMenu from "@/components/Menu/SubMenu.vue";
 import type {MenuProps} from "@/components/Menu/types";
 import {useMenu} from "@/components/Menu/useMenu";
 import {isDefined} from "@vueuse/core";
+import {onMounted} from "vue";
+
 
 const props = withDefaults(defineProps<MenuProps>(), {
     data: () => [],
+    iconProps: () => {
+        return {
+            style: { fontSize: '22px'},
+            class: 'mr-3'
+        }
+    },
+    backgroundColor: 'transparent'
 })
+onMounted(() => {
+    console.log("🚀 菜单路由", props, props.iconProps)
+})
+provide('iconProps', props.iconProps)
 
 const {generateMenuKeys} = useMenu()
 

@@ -1,47 +1,47 @@
 <template>
-    <div>首页</div>
-    <el-row class="mb-4">
-<!--        <el-button>Default</el-button>
-        <el-button type="primary">Primary</el-button>
-        <el-button type="success">Success</el-button>
-        <el-button type="info">Info</el-button>
-        <el-button type="warning">Warning</el-button>
-        <el-button type="danger">Danger</el-button>
-        <Icon icon="mdi:home" class="text-sky text-3xl" @click="handleClick" style="cursor: pointer"/>
-        <component :is="Icon" :icon="iconRef"/>
-        <img :src="svg" class="text-red text-3xl w-5 h-5 bg-red">
-        <SvgIcon type="advice" class="text-sky w-5 h-5"></SvgIcon>
-        <SvgIcon type="record" class="text-red w-5 h-5"></SvgIcon>
-        <SvgIcon type="setting" class="text-yellow w-5 h-5"></SvgIcon>
-        <SvgIcon type="share" class="text-green w-5 h-5"></SvgIcon>
-        &lt;!&ndash;    <i class="iconfont iconfont-kefu"></i>&ndash;&gt;
-        <NetIcon url="//at.alicdn.com/t/font_1791095_hy6b9xbrdsk.css" type="kefu"/>
-        <IconfontIcon type="yicaina"/>-->
-    </el-row>
-    <el-row class="mb-4">
-        现在模式：{{isDark}}
-<!--        <el-button type="primary" @click="handleDarkClick">暗黑模式</el-button>-->
-        <DarkModeToggle />
-        <div class="w-25 h-25 bg-red dark:bg-sky">块元素</div>
-    </el-row>
-    <el-row>
-        <FullScreen style="font-size: 2rem; color: blue"/>
-    </el-row>
-    <el-row>
-        <div>{{$t('hello')}}</div>
-        <div>{{$t('el.colorpicker.confirm')}}</div>
-        <select v-model="locale">
-            <option value="en">en</option>
-            <option value="zh-CN">中文</option>
-        </select>
-    </el-row>
-    <el-row>
-        <Menu mode="vertical" :data="data" class="w-[600px] mx-auto!">
-            <template #icon>
-                123
-            </template>
-        </Menu>
-    </el-row>
+    <!--    <div>首页</div>-->
+    <!--    <el-row class="mb-4">-->
+    <!--&lt;!&ndash;        <el-button>Default</el-button>-->
+    <!--        <el-button type="primary">Primary</el-button>-->
+    <!--        <el-button type="success">Success</el-button>-->
+    <!--        <el-button type="info">Info</el-button>-->
+    <!--        <el-button type="warning">Warning</el-button>-->
+    <!--        <el-button type="danger">Danger</el-button>-->
+    <!--        <Icon icon="mdi:home" class="text-sky text-3xl" @click="handleClick" style="cursor: pointer"/>-->
+    <!--        <component :is="Icon" :icon="iconRef"/>-->
+    <!--        <img :src="svg" class="text-red text-3xl w-5 h-5 bg-red">-->
+    <!--        <SvgIcon type="advice" class="text-sky w-5 h-5"></SvgIcon>-->
+    <!--        <SvgIcon type="record" class="text-red w-5 h-5"></SvgIcon>-->
+    <!--        <SvgIcon type="setting" class="text-yellow w-5 h-5"></SvgIcon>-->
+    <!--        <SvgIcon type="share" class="text-green w-5 h-5"></SvgIcon>-->
+    <!--        &lt;!&ndash;    <i class="iconfont iconfont-kefu"></i>&ndash;&gt;-->
+    <!--        <NetIcon url="//at.alicdn.com/t/font_1791095_hy6b9xbrdsk.css" type="kefu"/>-->
+    <!--        <IconfontIcon type="yicaina"/>&ndash;&gt;-->
+    <!--    </el-row>-->
+    <!--    <el-row class="mb-4">-->
+    <!--        现在模式：{{isDark}}-->
+    <!--&lt;!&ndash;        <el-button type="primary" @click="handleDarkClick">暗黑模式</el-button>&ndash;&gt;-->
+    <!--        <DarkModeToggle />-->
+    <!--        <div class="w-25 h-25 bg-red dark:bg-sky">块元素</div>-->
+    <!--    </el-row>-->
+    <!--    <el-row>-->
+    <!--        <FullScreen style="font-size: 2rem; color: blue"/>-->
+    <!--    </el-row>-->
+    <!--    <el-row>-->
+    <!--        <div>{{$t('hello')}}</div>-->
+    <!--        <div>{{$t('el.colorpicker.confirm')}}</div>-->
+    <!--        <select v-model="locale">-->
+    <!--            <option value="en">en</option>-->
+    <!--            <option value="zh-CN">中文</option>-->
+    <!--        </select>-->
+    <!--    </el-row>-->
+    <!--    <el-row>-->
+    <!--        <Menu mode="vertical" :data="data" class="w-[600px] mx-auto!">-->
+    <!--&lt;!&ndash;            <template #icon>-->
+    <!--                123-->
+    <!--            </template>&ndash;&gt;-->
+    <!--        </Menu>-->
+    <!--    </el-row>-->
 </template>
 
 <script setup lang="ts">
@@ -57,7 +57,7 @@ import IconList from "@/components/Icon/IconList.vue";
 import DarkModeToggle from "@/components/Themes/DarkModeToggle.vue";
 import FullScreen from "@/components/Themes/FullScreen.vue";
 import {loadLocaleMessages} from "@/modules/i18n";
-import Menu from "@/components/Menu/Menu.vue";
+// import Menu from "@/components/Menu/Menu.vue";
 import type {AppRouteMenuItem} from "@/components/Menu/types";
 
 // import {useI18n} from 'vue-i18n'
@@ -166,6 +166,14 @@ const data: AppRouteMenuItem[] = [
         },
     }
 ]
+
+definePage({
+    meta: {
+        title: '首页',
+        icon: 'mdi:home'
+    }
+})
+
 </script>
 
 <style scoped></style>
@@ -174,3 +182,4 @@ const data: AppRouteMenuItem[] = [
 meta:
 layout: default
 </route>
+

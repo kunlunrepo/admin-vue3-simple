@@ -10,6 +10,13 @@
 <script lang="ts" setup>
 import {RouterLink} from 'vue-router/auto'
 import NetIcon from "@/components/Icon/NetIcon.vue";
+
+definePage({
+    meta: {
+        title: '关于我们',
+        icon: 'mdi:about'
+    }
+})
 </script>
 
 <style>
