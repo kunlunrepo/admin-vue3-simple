@@ -18,8 +18,11 @@ declare module 'vue' {
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSlider: typeof import('element-plus/es')['ElSlider']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
@@ -29,6 +32,8 @@ declare module 'vue' {
     Iconify: typeof import('./src/components/Icon/Iconify.vue')['default']
     IconList: typeof import('./src/components/Icon/IconList.vue')['default']
     IconPicker: typeof import('./src/components/Icon/IconPicker.vue')['default']
+    Menu: typeof import('./src/components/Menu/Menu.vue')['default']
+    MenuItem: typeof import('./src/components/Menu/MenuItem.vue')['default']
     NetIcon: typeof import('./src/components/Icon/NetIcon.vue')['default']
     Notice: typeof import('./src/components/Notice/Notice.vue')['default']
     NoticeMessageList: typeof import('./src/components/Notice/NoticeMessageList.vue')['default']
@@ -36,6 +41,7 @@ declare module 'vue' {
     ReloadPrompt: typeof import('./src/components/other/ReloadPrompt.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SubMenu: typeof import('./src/components/Menu/SubMenu.vue')['default']
     SvgIcon: typeof import('./src/components/Icon/SvgIcon.vue')['default']
   }
 }

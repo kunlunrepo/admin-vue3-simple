@@ -35,6 +35,13 @@
             <option value="zh-CN">中文</option>
         </select>
     </el-row>
+    <el-row>
+        <Menu mode="vertical" :data="data" class="w-[600px] mx-auto!">
+            <template #icon>
+                123
+            </template>
+        </Menu>
+    </el-row>
 </template>
 
 <script setup lang="ts">
@@ -50,6 +57,8 @@ import IconList from "@/components/Icon/IconList.vue";
 import DarkModeToggle from "@/components/Themes/DarkModeToggle.vue";
 import FullScreen from "@/components/Themes/FullScreen.vue";
 import {loadLocaleMessages} from "@/modules/i18n";
+import Menu from "@/components/Menu/Menu.vue";
+import type {AppRouteMenuItem} from "@/components/Menu/types";
 
 // import {useI18n} from 'vue-i18n'
 
@@ -103,6 +112,60 @@ const locale = ref('zh-CN')
 watch(locale, () => {
     loadLocaleMessages(locale.value)
 })
+
+//路由
+const data: AppRouteMenuItem[] = [
+    {
+        name: "Home",
+        path: "/home",
+        meta: {
+            title: "首页",
+            layout: "default",
+            order: 1,
+            icon: "ep:apple",
+            hideMenu: false,
+            disabled: false
+        },
+        children: [
+            {
+                name: "About",
+                path: "/home/about",
+                meta: {
+                    title: "关于我们",
+                    layout: "default",
+                    order: 2,
+                    hideMenu: false,
+                    disabled: false
+                },
+                children: [
+                    {
+                        name: "Contact",
+                        path: "/home/about/contact",
+                        meta: {
+                            title: "联系我们",
+                            layout: "default",
+                            order: 3,
+                            hideMenu: false,
+                            disabled: false
+                        },
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        name: "Dashboard",
+        path: "/dashboard",
+        meta: {
+            title: "大屏",
+            layout: "default",
+            order: 4,
+            icon: "ep:bell",
+            hideMenu: false,
+            disabled: false
+        },
+    }
+]
 </script>
 
 <style scoped></style>
