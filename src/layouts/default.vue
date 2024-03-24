@@ -12,7 +12,7 @@
         <!--content-->
         <div class="flex-1 h-full">
             <!--header: fullscreen, darkmode, theme, menu-->
-            <Header :locales="locales"></Header>
+            <Header :locales="locales" :username="username" :src="avatar" :data="avatarMenu"></Header>
             <!--            <router-view></router-view>-->
         </div>
     </div>
@@ -24,12 +24,16 @@ import type {RouteRecordRaw} from "vue-router";
 import type {AppRouteMenuItem} from "@/components/Menu/types";
 import Header from "@/components/Layouts/Header.vue";
 import type {LocaleItem} from "@/components/Themes/types";
+import type {DropDownMenuItem} from "@/components/Avatar/types";
 
 
 
 interface ThemeSettings {
     menuWidth: string | number;
     locales?: LocaleItem[]
+    username: string,
+    avatar: string,
+    avatarMenu: DropDownMenuItem[]
 }
 
 const props = withDefaults(defineProps<ThemeSettings>(), {
@@ -45,7 +49,8 @@ const props = withDefaults(defineProps<ThemeSettings>(), {
             name: 'zh-CN',
             icon: 'uil:letter-chinese-a'
         }
-    ]
+    ],
+    username: '管理员'
 })
 
 function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {

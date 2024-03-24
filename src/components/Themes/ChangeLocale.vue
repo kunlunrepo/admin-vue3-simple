@@ -25,7 +25,7 @@ import type {IconProps} from "@iconify/vue";
 
 
 
-interface ChangeLocaleProps extends IconProps{
+interface ChangeLocaleProps extends Partial<IconProps> {
     locales: LocaleItem[]
     iconClass?: string
 }
