@@ -2,7 +2,10 @@
     <div class="w-full h-screen overflow-hidden flex">
         <!--左右布局-->
         <!--sidebar-->
-        <div :style="{width: typeof menuWidth === 'sting' ? menuWidth : menuWidth + 'px'}" class="h-full bg-sky">
+        <div :style="{
+            width: typeof menuWidth === 'sting' ? menuWidth : menuWidth + 'px',
+            backgroundColor: settings?.backgroundColor,
+            }" class="h-full">
             <el-scrollbar>
                 <!--menu-->
                 <Menu :data="menus"></Menu>
@@ -12,7 +15,12 @@
         <!--content-->
         <div class="flex-1 h-full">
             <!--header: fullscreen, darkmode, theme, menu-->
-            <Header :locales="locales" :username="username" :src="avatar" :data="avatarMenu"></Header>
+            <Header :locales="locales"
+                    :username="username"
+                    :src="avatar"
+                    :data="avatarMenu"
+                    :settings="settings"
+                    @settings-change="handleSettingsChange"></Header>
             <!--            <router-view></router-view>-->
         </div>
     </div>
@@ -23,12 +31,13 @@ import {routes} from 'vue-router/auto-routes'
 import type {RouteRecordRaw} from "vue-router";
 import type {AppRouteMenuItem} from "@/components/Menu/types";
 import Header from "@/components/Layouts/Header.vue";
-import type {LocaleItem} from "@/components/Themes/types";
+import type {LocaleItem, ThemeSettingsProps} from "@/components/Themes/types";
 import type {DropDownMenuItem} from "@/components/Avatar/types";
+import type {HeaderProps} from "@/components/Layouts/types";
 
 
 
-interface ThemeSettings {
+interface ThemeSettingsOption extends HeaderProps{
     menuWidth: string | number;
     locales?: LocaleItem[]
     username: string,
@@ -36,8 +45,7 @@ interface ThemeSettings {
     avatarMenu: DropDownMenuItem[]
 }
 
-const props = withDefaults(defineProps<ThemeSettings>(), {
-    menuWidth: 240,
+const localSettings = reactive<ThemeSettingsOption>({
     locales: () => [
         {
             text: 'English',
@@ -50,8 +58,13 @@ const props = withDefaults(defineProps<ThemeSettings>(), {
             icon: 'uil:letter-chinese-a'
         }
     ],
-    username: '管理员'
+    username: '管理员',
+    settings: {
+        menuWidth: 280
+    } as ThemeSettingsProps
 })
+
+const { locales, username, avatar, avatarMenu} = toRefs(localSettings)
 
 function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
     const menuData: AppRouteMenuItem[] = [];
@@ -131,6 +144,15 @@ const menus = computed(() => {
     console.log("布局菜单数据", routes)
     return generateMenuData(routes)
 })
+
+const menuWidth = computed(() => localSettings.settings ? localSettings.settings.menuWidth : 240)
+
+const settings = computed(() => localSettings.settings)
+
+const handleSettingsChange = (themeSettings: ThemeSettingsProps) => {
+    console.log("布局菜单数据", themeSettings)
+    localSettings.settings = themeSettings
+}
 
 </script>
 

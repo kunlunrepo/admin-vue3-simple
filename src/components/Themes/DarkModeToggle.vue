@@ -11,6 +11,8 @@ import {onMounted} from "vue";
 const props = defineProps({
     dark: Boolean
 })
+// 定义事件
+const emits = defineEmits(['change'])
 // 主题模式
 // const isDark = ref(props.dark)
 const isDark = useStorage('dark-mode-flag', props.dark)
@@ -36,6 +38,7 @@ function toggleMode(flag: boolean) {
 watch([isDark],()=> {
     nextTick(()=> {
         toggleMode(isDark.value)
+        emits('change', isDark)
     })
 }, {
     immediate: true
@@ -55,6 +58,7 @@ onMounted(() => {
         isDark.value = preferredDark.value
     }
 })
+
 
 
 </script>

@@ -2,6 +2,7 @@
 import { defineConfig } from 'unocss'
 // import presetWind from '@unocss/preset-wind'
 import { presetWind, presetIcons } from 'unocss'
+import transformerDirectives from '@unocss/transformer-directives'
 
 export default defineConfig({
   presets: [
@@ -13,5 +14,7 @@ export default defineConfig({
       }
     })
   ],
-  safelist: ['ep:full-screen','ri:fullscreen-exit-fill']
+  safelist: ['ep:full-screen','ri:fullscreen-exit-fill'],
+  // 使用transformerDirectives插件支持@apply等指令
+  transformers: [transformerDirectives()]
 })
