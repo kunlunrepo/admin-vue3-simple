@@ -3,24 +3,60 @@
         <!--左右布局-->
         <!--sidebar-->
         <div :style="{
-            width: typeof menuWidth === 'sting' ? menuWidth : menuWidth + 'px',
+            width: mixMenuWidth,
             backgroundColor: settings?.backgroundColor,
-            }" class="h-full">
-            <el-scrollbar>
-                <!--menu-->
-                <Menu :data="menus"></Menu>
-                <!--menu二级菜单-->
-            </el-scrollbar>
+            }" class="h-full transition-width"
+             v-if="settings?.mode !== 'top'"
+        >
+            <el-row class="h-full">
+                <!--menu 左侧 左侧菜单混合-->
+                <el-scrollbar
+                    v-if="settings?.mode !== 'mix'"
+                    :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']"
+                    :style="{
+                    backgroundColor: settings?.mode !== 'mixbar' ? 'auto' : darken(settings?.backgroundColor, 0.2)
+                }"
+                >
+                    <Menu
+                            :class="[{mixbar: settings?.mode === 'mixbar'}]"
+                            v-if="settings?.mode === 'siderbar' || settings?.mode === 'mixbar'"
+                            :data="mixMenus"
+                            :collapse="settings?.mode !== 'mixbar' && localSettings.collapse"
+                            text-color="#b8b8b8"
+                            :background-color="settings?.mode !== 'mixbar' ? settings?.backgroundColor : 'transparent'"
+                    ></Menu>
+                </el-scrollbar>
+                <!--menu二级菜单 左侧菜单混合 顶部左侧菜单混合-->
+                <el-scrollbar v-if="settings?.mode === 'mixbar' || settings?.mode === 'mix'">
+                    <Menu
+                            :data="getSubMenus(menus)"
+                            :collapse="localSettings.collapse"
+                            text-color="#b8b8b8"
+                            :background-color="settings?.backgroundColor"
+                    ></Menu>
+                </el-scrollbar>
+            </el-row>
         </div>
         <!--content-->
         <div class="flex-1 h-full">
             <!--header: fullscreen, darkmode, theme, menu-->
-            <Header :locales="locales"
+            <Header
+                    :locales="locales"
                     :username="username"
                     :src="avatar"
                     :data="avatarMenu"
                     :settings="settings"
-                    @settings-change="handleSettingsChange"></Header>
+                    @settings-change="handleSettingsChange"
+                    v-model:collapse="localSettings.collapse"
+            >
+                <!--menu 顶部左侧菜单混合 顶部模式-->
+                <Menu
+                        v-if="settings?.mode === 'mix' || settings?.mode === 'top'"
+                        :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus"
+                        :collapse="false"
+                        mode="horizontal"
+                ></Menu>
+            </Header>
             <!--            <router-view></router-view>-->
         </div>
     </div>
@@ -34,10 +70,11 @@ import Header from "@/components/Layouts/Header.vue";
 import type {LocaleItem, ThemeSettingsProps} from "@/components/Themes/types";
 import type {DropDownMenuItem} from "@/components/Avatar/types";
 import type {HeaderProps} from "@/components/Layouts/types";
+import {useMenu} from "@/components/Menu/useMenu";
+import {darken} from "@/utils";
 
 
-
-interface ThemeSettingsOption extends HeaderProps{
+interface ThemeSettingsOption extends HeaderProps {
     menuWidth: string | number;
     locales?: LocaleItem[]
     username: string,
@@ -64,7 +101,7 @@ const localSettings = reactive<ThemeSettingsOption>({
     } as ThemeSettingsProps
 })
 
-const { locales, username, avatar, avatarMenu} = toRefs(localSettings)
+const {locales, username, avatar, avatarMenu} = toRefs(localSettings)
 
 function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
     const menuData: AppRouteMenuItem[] = [];
@@ -84,70 +121,39 @@ function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
 }
 
 onMounted(() => {
-    const data: AppRouteMenuItem[] = [
-        {
-            name: "Home",
-            path: "/home",
-            meta: {
-                title: "首页",
-                layout: "default",
-                order: 1,
-                icon: "ep:apple",
-                hideMenu: false,
-                disabled: false
-            },
-            children: [
-                {
-                    name: "About",
-                    path: "/home/about",
-                    meta: {
-                        title: "关于我们",
-                        layout: "default",
-                        order: 2,
-                        hideMenu: false,
-                        disabled: false
-                    },
-                    children: [
-                        {
-                            name: "Contact",
-                            path: "/home/about/contact",
-                            meta: {
-                                title: "联系我们",
-                                layout: "default",
-                                order: 3,
-                                hideMenu: false,
-                                disabled: false
-                            },
-                        },
-                    ]
-                },
-            ]
-        },
-        {
-            name: "Dashboard",
-            path: "/dashboard",
-            meta: {
-                title: "大屏",
-                layout: "default",
-                order: 4,
-                icon: "ep:bell",
-                hideMenu: false,
-                disabled: false
-            },
-        }
-    ]
-    console.log("布局菜单数据", routes)
-    generateMenuData(routes)
+    // generateMenuData(routes)
+    console.log("默认布局菜单数据 顶级", getTopMenus(menus.value))
+    console.log("默认布局菜单数据 子级", getSubMenus(menus.value))
 })
 
+const { getTopMenus, getSubMenus } = useMenu()
+
+// 菜单数据
 const menus = computed(() => {
     console.log("布局菜单数据", routes)
     return generateMenuData(routes)
 })
 
+// 菜单宽度
 const menuWidth = computed(() => localSettings.settings ? localSettings.settings.menuWidth : 240)
 
 const settings = computed(() => localSettings.settings)
+
+// 混合菜单
+const mixMenus = computed(() => settings.value?.mode === 'mixbar'? getTopMenus(menus.value) : menus.value)
+
+// 判断二组菜单的顶级是否所有菜单项都设置了icon
+const isFullIcons = computed(() => getSubMenus(menus.value)
+    .every(item=> typeof item.meta?.icon !== 'undefined' && item.meta?.icon))
+
+// 混合左侧双菜单模式下的菜单宽度
+const mixMenuWidth = computed(() => {
+    if (settings.value?.mode === 'mixbar' && isFullIcons.value) {
+        return localSettings.collapse ? 'auto' : menuWidth.value + 'px'
+    } else {
+        return localSettings.collapse ? '64px' : menuWidth.value + 'px'
+    }
+})
 
 const handleSettingsChange = (themeSettings: ThemeSettingsProps) => {
     console.log("布局菜单数据", themeSettings)
@@ -156,4 +162,19 @@ const handleSettingsChange = (themeSettings: ThemeSettingsProps) => {
 
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.mixbar {
+  :deep(.el-menu-item) {
+    height: auto;
+    line-height: unset !important;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 4px 0 !important;
+
+    svg {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+}
+</style>

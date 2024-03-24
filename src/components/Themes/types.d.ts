@@ -9,6 +9,7 @@ export interface LocaleItem {
 
 export interface ThemeSettingsProps {
     theme: string
+    backgroundColor: string
     darkMode: boolean
     menuWidth?: number
     showLogo: boolean

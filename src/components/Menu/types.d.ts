@@ -30,5 +30,5 @@ export interface MenuProps extends Partial<ElMenuProps> {
 
 export interface IconOptions {
     style: CSSProperties
-    class: string
+    class?: string
 }

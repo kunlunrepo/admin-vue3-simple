@@ -1,7 +1,9 @@
 <template>
     <el-row class="items-center">
-        <Iconify :icon="collapse ? 'ep:expand' : 'ep:fold'" class="text-2xl cursor-pointer"></Iconify>
-        <div class="flex-grow"></div>
+        <Iconify :icon="collapseModel ? 'ep:expand' : 'ep:fold'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
+        <div class="flex-grow">
+            <slot></slot>
+        </div>
         <el-row class="items-center">
             <ThemeSettings v-bind="settings" @change="handleChange"></ThemeSettings>
             <DarkModeToggle :dark="settings?.darkMode" @change="handleDarkModeToggle" class="mr-2"></DarkModeToggle>
@@ -33,6 +35,10 @@ import type {HeaderProps} from "@/components/Layouts/types";
 
 const props = withDefaults(defineProps<HeaderProps>(), {
     collapse: false
+})
+
+const collapseModel = defineModel('collapse', {
+    default: false
 })
 
 const localProps = reactive({...props})

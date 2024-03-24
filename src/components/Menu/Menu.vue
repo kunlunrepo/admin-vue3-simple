@@ -1,10 +1,11 @@
 <template>
-    <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}">
+    <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}" class="border-r-0!">
         <slot name="icon"></slot>
         <!--左右logo+菜单的情况-->
         <div class="flex-grow" v-if="isDefined(slots['icon'])"></div>
         <sub-menu v-for="menu in filterMenus"
-                  :key="menu.path" v-bind:data="menu"
+                  :key="menu.path"
+                  v-bind:data="menu"
                   v-bind="subMenuProps"
                   :collapse="collapse"
         ></sub-menu>
@@ -29,9 +30,19 @@ const props = withDefaults(defineProps<MenuProps>(), {
     },
     backgroundColor: 'transparent'
 })
+
 onMounted(() => {
     console.log("🚀 菜单路由", props, props.iconProps)
 })
+
+const iconProps = reactive(props.iconProps)
+
+watch(() => props.collapse, () => {
+    console.log("🚀 菜单图标 前", props.iconProps)
+    iconProps.class = props.collapse ? '' : 'mr-3'
+    console.log("🚀 菜单图标 后", props.iconProps)
+})
+
 provide('iconProps', props.iconProps)
 
 const {generateMenuKeys} = useMenu()
@@ -47,6 +58,12 @@ const menuProps = computed(() => {
 
 </script>
 
-<style scoped>
+<style lang="scss">
+.el-menu--vertical .el-sub-menu__title{
+    padding-right: 0 !important;
+}
 
+.el-menu--horizontal.el-menu {
+    border-bottom: 0 !important;
+}
 </style>

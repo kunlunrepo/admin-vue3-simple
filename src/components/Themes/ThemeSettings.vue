@@ -1,7 +1,7 @@
 <template>
     <Iconify icon="ri:brush-2-line" class="text-xl mr-2 cursor-pointer" @click="drawer = true"></Iconify>
     <el-drawer v-model="drawer" title="主题设置" @close="handleClose">
-        <el-form :model="form">
+        <el-form :model="form" label-position="left">
             <!--主题颜色-->
             <el-form-item label="主题颜色">
                 <el-color-picker v-model="form.theme"></el-color-picker>
@@ -14,24 +14,24 @@
             <el-form-item label="导航模式" class="flex-col">
                 <div class="flex justify-around flex-1">
                     <el-tooltip content="左侧菜单">
-                        <div class="item">
+                        <div class="item" @click="form.mode = 'siderbar'">
                             <div class="bg-dark w-1/4 h-100 left-0 top-0 absolute z-30"></div>
                             <div class="bg-white w-full h-1/4 left-0 top-0 absolute z-10"></div>
                         </div>
                     </el-tooltip>
                     <el-tooltip content="顶部左侧菜单混合">
-                        <div class="item">
+                        <div class="item" @click="form.mode = 'mix'">
                             <div class="bg-white w-1/4 h-full left-0 top-0 absolute z-10"></div>
                             <div class="bg-dark w-full h-1/4 left-0 top-0 absolute z-30"></div>
                         </div>
                     </el-tooltip>
                     <el-tooltip content="顶部菜单">
-                        <div class="item">
+                        <div class="item" @click="form.mode = 'top'">
                             <div class="bg-dark w-full h-1/4 left-0 top-0 absolute z-10"></div>
                         </div>
                     </el-tooltip>
                     <el-tooltip content="左侧菜单混合">
-                        <div class="item">
+                        <div class="item" @click="form.mode = 'mixbar'">
                             <div class="bg-dark w-1/5 h-full left-0 top-0 absolute z-30"></div>
                             <div class="bg-white w-1/3 h-full left-0 top-0 absolute z-10"></div>
                             <div class="bg-white w-full h-1/4 left-0 top-0 absolute z-20 border-b"></div>

@@ -2,7 +2,7 @@
     <MenuItem :data="data" :collapse="collapse" v-if="!menuHasChildren(data)"/>
   <!--有下拉菜单item-->
     <el-sub-menu :index="getIndex(data)" v-if="menuHasChildren(data)">
-        <template #title v-if="data.meta?.icon">
+        <template #title v-if="!data.meta?.icon">
             {{ data.meta?.title }}
         </template>
         <!--折叠,侧栏-->
