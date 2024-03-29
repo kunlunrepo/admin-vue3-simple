@@ -1,9 +1,9 @@
 <template>
     <div class="icon-picker">
         <el-button type="primary" @click="() => toggle(true)">
-            <slot>选择图标</slot>
+            <slot>{{ $t('components.icon-picker') }}</slot>
         </el-button>
-        <el-dialog :width="width" v-model="show" :title="title">
+        <el-dialog :width="width" v-model="show" :title="$t(title)">
             <!--icon列表-->
             <IconList item-class="hover:bg-sky-100" icon-class="text-2xl" :show-text="false" @click="handleClick"
                       active-class="text-sky"/>
@@ -19,13 +19,13 @@
                 </div>
             </div>
             <div class="flex item-center">
-                <span class="pr-2">选中的图标：</span>
+                <span class="pr-2">{{ $t('components.choose-icon') }}：</span>
                 <Icon :icon="iconRef" :style="{color: color, fontSize: `${num}px`}"/>
                 <span class="pl-2">{{ iconRef }}</span>
             </div>
             <template #footer>
-                <el-button @click="() => toggle(false)">取消</el-button>
-                <el-button type="primary" @click="handleConfirm">确定</el-button>
+                <el-button @click="() => toggle(false)">{{ $t('components.cancel') }}</el-button>
+                <el-button type="primary" @click="handleConfirm">{{ $t('components.submit') }}</el-button>
             </template>
         </el-dialog>
 
@@ -36,15 +36,14 @@
 import {Icon} from "@iconify/vue";
 import type {IconPickerSubmitDataProps} from "@/components/Icon/types";
 
-defineProps({
-    width: {
-        type: String,
-        default: "50%"
-    },
-    title: {
-        type: String,
-        default: "选择图标"
-    }
+interface IconPickerProps {
+    width?: string
+    title?: string
+}
+
+withDefaults(defineProps<IconPickerProps>(), {
+    width: '50%',
+    title: 'components.icon-picker'
 })
 
 // 选中颜色

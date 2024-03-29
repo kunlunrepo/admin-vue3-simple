@@ -107,7 +107,7 @@ const handleClickItem = (item: any) => {
 
 definePage({
     meta: {
-        title: '消息通知',
+        title: 'pages.head-message',
         icon: 'mdi:message'
     }
 })

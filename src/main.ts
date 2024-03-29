@@ -7,7 +7,7 @@ import router from './router'
 import './assets/main.css'
 // import 'reset-css'
 // import '@unocss/reset/normalize.css'
-import '@unocss/reset/tailwind.css'
+import '@unocss/reset/tailwind-compat.css' // 防止样式冲突
 import 'virtual:uno.css'
 import 'virtual:svg-icons-register'
 

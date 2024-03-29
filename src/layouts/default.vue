@@ -57,6 +57,7 @@
                         mode="horizontal"
                 ></Menu>
             </Header>
+            <IconPicker/>
             <!--            <router-view></router-view>-->
         </div>
     </div>
@@ -83,17 +84,18 @@ interface ThemeSettingsOption extends HeaderProps {
 }
 
 const localSettings = reactive<ThemeSettingsOption>({
-    locales: () => [
+    collapse: false, // 折叠菜单
+    locales: [
+        {
+            text: '中文',
+            name: 'zh-CN',
+            icon: 'uil:letter-chinese-a'
+        },
         {
             text: 'English',
             name: 'en',
             icon: 'ri:english-input'
         },
-        {
-            text: '中文',
-            name: 'zh-CN',
-            icon: 'uil:letter-chinese-a'
-        }
     ],
     username: '管理员',
     settings: {

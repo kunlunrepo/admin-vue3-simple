@@ -1,27 +1,25 @@
 <template>
-    <el-dropdown trigger="click" @command="handleCommand">
-        <slot name="header">
-            <span class="el-dropdown-link">
+    <DropDown :items="locales"
+              :icon-props="iconPropsComputed"
+              :icon-class="iconClass"
+              @change="handleCommand"
+              :v-model="current">
+        <template #header>
+            <span class="mr-2">
                 <Iconify icon="ion:language"  v-bind="iconPropsComputed" :class="iconClass"></Iconify>
             </span>
-        </slot>
-        <template #dropdown>
-            <el-dropdown-menu>
-                <el-dropdown-item v-for="(locale, index) in locales" :key="index" :command="locale.name">
-                    <div class="flex items-center">
-                        <Iconify v-if="locale.icon" :icon="locale.icon" v-bind="iconPropsComputed" class="mr-2" :class="iconClass"></Iconify>
-                        {{ locale.text }}
-                    </div>
-                </el-dropdown-item>
-            </el-dropdown-menu>
         </template>
-    </el-dropdown>
+        <template #item="{ item }">
+            {{ item.text }}
+        </template>
+    </DropDown>
 </template>
 
 <script setup lang="ts">
 import Iconify from "@/components/Icon/Iconify.vue";
 import type {LocaleItem} from "@/components/Themes/types";
 import type {IconProps} from "@iconify/vue";
+import DropDown from "@/components/Menu/DropDown.vue";
 
 
 
@@ -40,17 +38,30 @@ const props = withDefaults(defineProps<ChangeLocaleProps>(), {
 //     icon
 // })
 
-const handleCommand = (command: string | number | object) => {
-    console.log("🚀 国际化", command)
+const emits = defineEmits<{
+    change: [ command: string]
+}>()
+
+const handleCommand = (locale: LocaleItem) => {
+    // current.value = index
+    emits('change', locale.name)
 }
 
 const iconPropsComputed = computed(() => {
     const { locales, icon, ...restProps } = props
+    console.log("🚀🚀🚀 国际化测试", restProps)
     return restProps
 })
 
+const current = ref(0)
+
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+:deep(.el-dropdown-menu__item) {
+    &.active {
+        background-color: var(--el-dropdown-menuItem-hover-fill);
+        color: var(--el-dropdown-menuItem-hover-color);
+    }
+}
 </style>

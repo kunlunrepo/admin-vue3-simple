@@ -3,12 +3,12 @@
   <!--有下拉菜单item-->
     <el-sub-menu :index="getIndex(data)" v-if="menuHasChildren(data)">
         <template #title v-if="!data.meta?.icon">
-            {{ data.meta?.title }}
+            {{ $t(data.meta?.title || '') }}
         </template>
         <!--折叠,侧栏-->
         <template #title v-else>
             <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"/>
-            <span>{{ data.meta?.title }}</span>
+            <span>{{ $t(data.meta?.title || '') }}</span>
         </template>
         <SubMenu v-for="child in data.children" :key="`${data.path}/${child.path}`" :data="child" v-bind="subAttrs"/>
     </el-sub-menu>

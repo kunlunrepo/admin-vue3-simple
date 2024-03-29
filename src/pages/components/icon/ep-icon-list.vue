@@ -1,9 +1,9 @@
 <!--所有的element-plus的图标-->
 <template>
     <div class="w-full flex justify-end px-4">
-        <el-checkbox v-model="copyElement" label="复制Icon组件" class="mb-2"/>
-        <el-switch v-model="copyTypeFlay" active-text="复制Icon名称" inactive-text="复制Icon图标" class="mb-2 mx-4"/>
-        <el-switch v-model="showText" active-text="显示名称" inactive-text="隐藏文字" class="mb-2"/>
+        <el-checkbox v-model="copyElement" :label="$t('components.copy-icon')" class="mb-2"/>
+        <el-switch v-model="copyTypeFlay" :active-text="$t('components.copy-icon-name')" :inactive-text="$t('components.copy-svg')" class="mb-2 mx-4"/>
+        <el-switch v-model="showText" :active-text="$t('components.show-text')" inactive-text="$t('components.hide-text')" class="mb-2"/>
     </div>
     <IconList :show-text="showText" @click="handleClick"/>
 </template>
@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { loadIcon} from '@iconify/vue'
 import { ElMessage } from 'element-plus'
+import {useI18n} from "vue-i18n";
 
 // false - CopySvgData
 // true - CopyName
@@ -21,6 +22,8 @@ const { copy, copied} = useClipboard({source})
 
 const copyElement = ref(false)
 const showText = ref(true)
+
+const {t} = useI18n()
 
 // 图标事件
 async function handleClick(i : string) {
@@ -39,7 +42,7 @@ async function handleClick(i : string) {
     }
     copy()
     copied && ElMessage({
-        message: '复制成功',
+        message: t('message.copy-success'),
         type: 'success'
     })
 }
@@ -77,7 +80,7 @@ function objectToSvg(svgObject: any) {
 
 definePage({
     meta: {
-        title: '图标列表',
+        title: 'components.icon-lists',
         icon: 'mdi:bookmark-multiple'
     }
 })

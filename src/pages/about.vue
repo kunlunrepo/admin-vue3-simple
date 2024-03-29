@@ -13,7 +13,7 @@ import NetIcon from "@/components/Icon/NetIcon.vue";
 
 definePage({
     meta: {
-        title: '关于我们',
+        title: 'pages.about',
         icon: 'mdi:about'
     }
 })

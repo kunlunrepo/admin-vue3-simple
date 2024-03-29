@@ -1,11 +1,13 @@
 <template>
-    <div>4</div>
+    <div>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script setup lang="ts">
 definePage({
     meta: {
-        title: '组件示例',
+        title: 'pages.components',
         icon: 'mdi:apps'
     }
 })

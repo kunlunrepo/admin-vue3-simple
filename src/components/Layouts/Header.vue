@@ -7,7 +7,7 @@
         <el-row class="items-center">
             <ThemeSettings v-bind="settings" @change="handleChange"></ThemeSettings>
             <DarkModeToggle :dark="settings?.darkMode" @change="handleDarkModeToggle" class="mr-2"></DarkModeToggle>
-            <ChangeLocale :locales="locales" class="mr-2"></ChangeLocale>
+            <ChangeLocale :locales="locales" class="mr-2" @change="handleLocalesChange"></ChangeLocale>
             <FullScreen></FullScreen>
             <el-divider direction="vertical"></el-divider>
             <!--用户头像下拉菜单-->
@@ -31,6 +31,7 @@ import type {AvatarMenuProps} from "@/components/Avatar/types";
 import ThemeSettings from "@/components/Themes/ThemeSettings.vue";
 import {ThemeSettingsProps} from "@/components/Themes/types";
 import type {HeaderProps} from "@/components/Layouts/types";
+import {loadLocaleMessages} from "@/modules/i18n";
 
 
 const props = withDefaults(defineProps<HeaderProps>(), {
@@ -75,6 +76,10 @@ const handleChange = (settings: ThemeSettingsProps) => {
 const handleDarkModeToggle = (dark: boolean) => {
     localProps.settings.darkMode = dark
     // emits('settingsChange', localProps.settings)
+}
+
+const handleLocalesChange = (locales: string) => {
+    loadLocaleMessages(locales)
 }
 </script>
 

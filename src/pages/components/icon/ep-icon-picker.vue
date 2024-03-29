@@ -14,7 +14,7 @@ const handleSubmit = (data: IconPickerSubmitDataProps) => {
 }
 definePage({
     meta: {
-        title: '图标选择器',
+        title: 'pages.pick-icon',
         icon: 'healthicons:i-exam-multiple-choice'
     }
 })

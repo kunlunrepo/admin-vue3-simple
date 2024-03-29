@@ -169,7 +169,7 @@ const data: AppRouteMenuItem[] = [
 
 definePage({
     meta: {
-        title: '首页',
+        title: 'pages.home',
         icon: 'mdi:home'
     }
 })
