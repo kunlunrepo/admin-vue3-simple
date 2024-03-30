@@ -1,6 +1,6 @@
 <template>
     <el-row class="items-center">
-        <Iconify :icon="collapseModel ? 'ep:expand' : 'ep:fold'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
+        <Iconify v-if="settings?.mode !== 'top'" :icon="collapseModel ? 'ep:expand' : 'ep:fold'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
         <div class="flex-grow">
             <slot></slot>
         </div>

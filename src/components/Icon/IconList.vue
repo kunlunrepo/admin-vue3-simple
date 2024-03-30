@@ -1,5 +1,5 @@
 <template>
-    <ul class="grid grid-cols-[repeat(auto-fill,minmax(1.825rem,1fr))] border-l border-t rounded">
+    <ul class="grid grid-cols-[repeat(auto-fill,minmax(7rem,1fr))] border-l border-t rounded">
         <li :class="['border-r border-b flex flex-col justify-center items-center cursor-pointer', itemClass] "
             v-for="(i, index) in iconData" :key="index" @click="handleClick(`${collection}:${i}`, index)">
             <component :is="Icon" :icon="`${collection}:${i}`"
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<IconListProps>(), {
     iconData: () => data,
     collection: 'ep',
     iconClass: 'text-3xl mb-3',
-    itemClass: 'hover:bg-sky-100 w-1/8 py-4',
+    itemClass: 'hover:bg-sky-100 py-4',
     showText: true
 })
 

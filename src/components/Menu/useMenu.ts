@@ -43,9 +43,42 @@ export function useMenu() {
     // 获取子菜单
     function getSubMenus(menus: AppRouteMenuItem[]) {
         const route = useRoute()
-        const path = computed(() => route.path)
+        const path = computed(() => {
+            if (route.path === '/') {
+                return '/'
+            }
+            const routePath = route.path.split('/')[1]
+            return routePath? `/${routePath}` : '/'
+        })
         const filterMenus = filterAndOrderMenus(menus)
         return filterMenus.find((item) => item.path === path.value)?.children || []
+    }
+
+    // 获取当前需要激活的子菜单信息
+    function getParentMenu(menus: AppRouteMenuItem[]): AppRouteMenuItem | undefined {
+        const route = useRoute()
+        const path = computed(() => route.path)
+        return getItemCondition(menus, (item) => {
+            const arr = path.value.split('/')
+            if (arr.length < 3) return false
+            arr.pop() // 移除最后一个
+            return arr.join('/') === item.name
+        })
+    }
+
+    function getItemCondition(menus: AppRouteMenuItem[], fn: (item: AppRouteMenuItem) => boolean) {
+        for (let i = 0; i < menus.length; i++) {
+            if (fn(menus[i])) {
+                return menus[i]
+            } else {
+                if (menus[i].children && Array.isArray(menus[i].children)) {
+                    const item = getItemCondition(menus[i].children!, fn) as AppRouteMenuItem | undefined
+                    if (item) {
+                        return item
+                    }
+                }
+            }
+        }
     }
 
     // 获取菜单索引
@@ -60,18 +93,19 @@ export function useMenu() {
 
     // 获取菜单项
     function getItem(menus: AppRouteMenuItem[], index: string) {
-        for (let i = 0; i < menus.length; i++) {
-            if (menus[i].meta?.key === index) {
-                return menus[i]
-            } else {
-                if (menus[i].children && Array.isArray(menus[i].children)) {
-                   const item = getItem(menus[i].children!, index) as AppRouteMenuItem | undefined
-                    if (item) {
-                        return item
-                    }
-                }
-            }
-        }
+        // for (let i = 0; i < menus.length; i++) {
+        //     if (menus[i].meta?.key === index) {
+        //         return menus[i]
+        //     } else {
+        //         if (menus[i].children && Array.isArray(menus[i].children)) {
+        //            const item = getItem(menus[i].children!, index) as AppRouteMenuItem | undefined
+        //             if (item) {
+        //                 return item
+        //             }
+        //         }
+        //     }
+        // }
+        return getItemCondition(menus, (item) => item.meta?.key === index)
     }
 
     return {
@@ -82,5 +116,6 @@ export function useMenu() {
         getSubMenus,
         filterAndOrderMenus,
         getItem,
+        getParentMenu,
     }
 }

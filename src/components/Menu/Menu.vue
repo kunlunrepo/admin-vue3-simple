@@ -1,5 +1,6 @@
 <template>
     <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}" class="border-r-0!"
+             ref="menuRef"
              @select="handleSelect" @open="handleOpen" @close="handleClose">
         <slot name="icon"></slot>
         <!--左右logo+菜单的情况-->
@@ -32,8 +33,16 @@ const props = withDefaults(defineProps<MenuProps>(), {
     backgroundColor: 'transparent'
 })
 
+const menuRef = ref()
+
 onMounted(() => {
     console.log("🚀 菜单路由", props, props.iconProps)
+    const item = getParentMenu(filterMenus.value)
+    if (item && item.meta && item.meta.key) {
+        if (menuRef.value && menuRef.value.open) {
+            menuRef.value.open(item.meta.key)
+        }
+    }
 })
 
 const iconProps = reactive(props.iconProps)
@@ -46,7 +55,7 @@ watch(() => props.collapse, () => {
 
 provide('iconProps', props.iconProps)
 
-const {generateMenuKeys, getItem} = useMenu()
+const {generateMenuKeys, getItem, getParentMenu} = useMenu()
 
 const filterMenus = computed(() => generateMenuKeys(props.data))
 
