@@ -32,3 +32,11 @@ export interface IconOptions {
     style: CSSProperties
     class?: string
 }
+
+export type EmitSelectType = [
+    index: string,
+    indexPath: string[],
+    item: MenuItemClicked,
+    routerResult?: Promise<void | NavigationFailure>
+]
+export type OpenCloseType = [index: string, indexPath: string[]]

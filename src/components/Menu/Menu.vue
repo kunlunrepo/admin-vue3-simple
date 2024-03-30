@@ -1,5 +1,6 @@
 <template>
-    <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}" class="border-r-0!">
+    <el-menu v-bind="menuProps" :style="{'--bg-color': backgroundColor}" class="border-r-0!"
+             @select="handleSelect" @open="handleOpen" @close="handleClose">
         <slot name="icon"></slot>
         <!--左右logo+菜单的情况-->
         <div class="flex-grow" v-if="isDefined(slots['icon'])"></div>
@@ -14,7 +15,7 @@
 
 <script setup lang="ts">
 import SubMenu from "@/components/Menu/SubMenu.vue";
-import type {MenuProps} from "@/components/Menu/types";
+import type {AppRouteMenuItem, EmitSelectType, MenuProps, OpenCloseType} from "@/components/Menu/types";
 import {useMenu} from "@/components/Menu/useMenu";
 import {isDefined} from "@vueuse/core";
 import {onMounted} from "vue";
@@ -45,7 +46,7 @@ watch(() => props.collapse, () => {
 
 provide('iconProps', props.iconProps)
 
-const {generateMenuKeys} = useMenu()
+const {generateMenuKeys, getItem} = useMenu()
 
 const filterMenus = computed(() => generateMenuKeys(props.data))
 
@@ -55,6 +56,25 @@ const menuProps = computed(() => {
     const {subMenuProps, data, ...restProps} = props
     return restProps
 })
+
+// 定义菜单弹射事件
+const emits = defineEmits<{
+    select: [item: AppRouteMenuItem]
+    open: [args: OpenCloseType]
+    close: [args: OpenCloseType]
+}>()
+
+const handleSelect = (...args: EmitSelectType) => {
+    const [index] = args
+    const item = getItem(filterMenus.value, index)
+    if (item) emits('select', item)
+}
+const handleOpen = (...args: OpenCloseType) => {
+    emits('open', args)
+}
+const handleClose = (...args: OpenCloseType) => {
+    emits('close', args)
+}
 
 </script>
 

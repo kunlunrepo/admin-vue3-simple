@@ -58,6 +58,22 @@ export function useMenu() {
         return !item.meta?.hideMenu && Array.isArray(item.children) && item.children.length > 0
     }
 
+    // 获取菜单项
+    function getItem(menus: AppRouteMenuItem[], index: string) {
+        for (let i = 0; i < menus.length; i++) {
+            if (menus[i].meta?.key === index) {
+                return menus[i]
+            } else {
+                if (menus[i].children && Array.isArray(menus[i].children)) {
+                   const item = getItem(menus[i].children!, index) as AppRouteMenuItem | undefined
+                    if (item) {
+                        return item
+                    }
+                }
+            }
+        }
+    }
+
     return {
         generateMenuKeys,
         getIndex,
@@ -65,5 +81,6 @@ export function useMenu() {
         getTopMenus,
         getSubMenus,
         filterAndOrderMenus,
+        getItem,
     }
 }

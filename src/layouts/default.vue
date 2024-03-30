@@ -11,9 +11,9 @@
             <el-row class="h-full">
                 <!--menu 左侧 左侧菜单混合-->
                 <el-scrollbar
-                    v-if="settings?.mode !== 'mix'"
-                    :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']"
-                    :style="{
+                        v-if="settings?.mode !== 'mix'"
+                        :class="[settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px] py-4']"
+                        :style="{
                     backgroundColor: settings?.mode !== 'mixbar' ? 'auto' : darken(settings?.backgroundColor, 0.2)
                 }"
                 >
@@ -24,6 +24,7 @@
                             :collapse="settings?.mode !== 'mixbar' && localSettings.collapse"
                             text-color="#b8b8b8"
                             :background-color="settings?.mode !== 'mixbar' ? settings?.backgroundColor : 'transparent'"
+                            @select="handleSelect"
                     ></Menu>
                 </el-scrollbar>
                 <!--menu二级菜单 左侧菜单混合 顶部左侧菜单混合-->
@@ -33,6 +34,7 @@
                             :collapse="localSettings.collapse"
                             text-color="#b8b8b8"
                             :background-color="settings?.backgroundColor"
+                            @select="handleSelect"
                     ></Menu>
                 </el-scrollbar>
             </el-row>
@@ -55,10 +57,11 @@
                         :data="settings?.mode === 'mix' ? getTopMenus(menus) : menus"
                         :collapse="false"
                         mode="horizontal"
+                        @select="handleSelect"
                 ></Menu>
             </Header>
-            <IconPicker/>
-            <!--            <router-view></router-view>-->
+            <!--            <IconPicker/>-->
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -105,6 +108,8 @@ const localSettings = reactive<ThemeSettingsOption>({
 
 const {locales, username, avatar, avatarMenu} = toRefs(localSettings)
 
+const router = useRouter()
+
 function generateMenuData(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
     const menuData: AppRouteMenuItem[] = [];
     routes.forEach((item: any) => {
@@ -128,7 +133,7 @@ onMounted(() => {
     console.log("默认布局菜单数据 子级", getSubMenus(menus.value))
 })
 
-const { getTopMenus, getSubMenus } = useMenu()
+const {getTopMenus, getSubMenus} = useMenu()
 
 // 菜单数据
 const menus = computed(() => {
@@ -142,11 +147,11 @@ const menuWidth = computed(() => localSettings.settings ? localSettings.settings
 const settings = computed(() => localSettings.settings)
 
 // 混合菜单
-const mixMenus = computed(() => settings.value?.mode === 'mixbar'? getTopMenus(menus.value) : menus.value)
+const mixMenus = computed(() => settings.value?.mode === 'mixbar' ? getTopMenus(menus.value) : menus.value)
 
 // 判断二组菜单的顶级是否所有菜单项都设置了icon
 const isFullIcons = computed(() => getSubMenus(menus.value)
-    .every(item=> typeof item.meta?.icon !== 'undefined' && item.meta?.icon))
+    .every(item => typeof item.meta?.icon !== 'undefined' && item.meta?.icon))
 
 // 混合左侧双菜单模式下的菜单宽度
 const mixMenuWidth = computed(() => {
@@ -162,6 +167,13 @@ const handleSettingsChange = (themeSettings: ThemeSettingsProps) => {
     localSettings.settings = themeSettings
 }
 
+// 菜单点击事件
+const handleSelect = (item: AppRouteMenuItem) => {
+    console.log("菜单点击事件", item)
+    if (item && item.name) {
+        router.push(item.name as string)
+    }
+}
 </script>
 
 <style scoped lang="scss">

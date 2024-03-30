@@ -3,7 +3,7 @@
     <div class="w-full flex justify-end px-4">
         <el-checkbox v-model="copyElement" :label="$t('components.copy-icon')" class="mb-2"/>
         <el-switch v-model="copyTypeFlay" :active-text="$t('components.copy-icon-name')" :inactive-text="$t('components.copy-svg')" class="mb-2 mx-4"/>
-        <el-switch v-model="showText" :active-text="$t('components.show-text')" inactive-text="$t('components.hide-text')" class="mb-2"/>
+        <el-switch v-model="showText" :active-text="$t('components.show-text')" :inactive-text="$t('components.hide-text')" class="mb-2"/>
     </div>
     <IconList :show-text="showText" @click="handleClick"/>
 </template>
